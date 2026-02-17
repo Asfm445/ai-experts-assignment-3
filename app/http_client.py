@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Union
 
 import requests
 
-from .tokens import OAuth2Token
+from .tokens import OAuth2Token, token_from_iso
 
 
 class Client:
@@ -27,13 +27,22 @@ class Client:
             headers = {}
 
         if api:
-            if not self.oauth2_token or (
-                isinstance(self.oauth2_token, OAuth2Token) and self.oauth2_token.expired
-            ):
+            
+            if isinstance(self.oauth2_token, dict):
+                access_token = self.oauth2_token.get("access_token")
+                expires_at = self.oauth2_token.get("expires_at")
+
+                if isinstance(expires_at, str):
+                    self.oauth2_token = token_from_iso(access_token, expires_at)
+                else:
+                    self.oauth2_token = OAuth2Token(access_token=access_token, expires_at=expires_at)
+
+            if not self.oauth2_token or self.oauth2_token.expired:
                 self.refresh_oauth2()
 
             if isinstance(self.oauth2_token, OAuth2Token):
                 headers["Authorization"] = self.oauth2_token.as_header()
+
 
         req = requests.Request(method=method, url=f"https://example.com{path}", headers=headers)
         prepared = self.session.prepare_request(req)
