@@ -33,7 +33,7 @@ How to run tests locally:
 
 How to build and run tests with Docker:
 
-- Build the image (Dockerfile must use `pip install -r requirements.txt`):
+- Build the image :
 	`docker build -t ai-experts .`
 - Run the tests in the container:
 	`docker run --rm ai-experts`
