@@ -40,6 +40,26 @@ Update this README to include:
 - Python 3.11+
 - (Optional) A virtual environment: `python -m venv .venv`
 
+	Activate the virtual environment:
+
+	- Linux / macOS:
+
+		```bash
+		source .venv/bin/activate
+		```
+
+	- Windows (PowerShell):
+
+		```powershell
+		.\.venv\Scripts\Activate.ps1
+		```
+
+	- Windows (Command Prompt):
+
+		```bat
+		.venv\Scripts\activate
+		```
+
 ### Steps
 
 1. Install dependencies:
