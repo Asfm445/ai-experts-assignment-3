@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Union
 
 import requests
 
-from .tokens import OAuth2Token, token_from_iso
+from .tokens import OAuth2Token
 
 
 class Client:
@@ -23,28 +23,16 @@ class Client:
         api: bool = False,
         headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
-        if headers is None:
-            headers = {}
+        local_headers = headers.copy() if headers is not None else {}
 
         if api:
-            
-            if isinstance(self.oauth2_token, dict):
-                access_token = self.oauth2_token.get("access_token")
-                expires_at = self.oauth2_token.get("expires_at")
-
-                if isinstance(expires_at, str):
-                    self.oauth2_token = token_from_iso(access_token, expires_at)
-                else:
-                    self.oauth2_token = OAuth2Token(access_token=access_token, expires_at=expires_at)
-
-            if not self.oauth2_token or self.oauth2_token.expired:
+            if not isinstance(self.oauth2_token, OAuth2Token) or self.oauth2_token.expired:
                 self.refresh_oauth2()
 
             if isinstance(self.oauth2_token, OAuth2Token):
-                headers["Authorization"] = self.oauth2_token.as_header()
+                local_headers["Authorization"] = self.oauth2_token.as_header()
 
-
-        req = requests.Request(method=method, url=f"https://example.com{path}", headers=headers)
+        req = requests.Request(method=method, url=f"https://example.com{path}", headers=local_headers)
         prepared = self.session.prepare_request(req)
 
         return {

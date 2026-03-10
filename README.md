@@ -26,24 +26,47 @@ Create a `requirements.txt` with pinned versions, using this format:
 
 - `package==x.y.z`
 
-How to run tests locally:
-
-- Install pinned dependencies: `pip install -r requirements.txt`
-- Run the test suite: `python -m pytest -v`
-
-How to build and run tests with Docker:
-
-- Build the image :
-	`docker build -t ai-experts .`
-- Run the tests in the container:
-	`docker run --rm ai-experts`
-
 ### 3) README updates (required)
 
 Update this README to include:
 
 - how to run the tests locally,
 - how to build and run tests with Docker.
+
+## How to Run Locally
+
+### Prerequisites
+
+- Python 3.11+
+- (Optional) A virtual environment: `python -m venv .venv`
+
+### Steps
+
+1. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Run the test suite:
+
+```bash
+pytest -v
+```
+
+## How to Run with Docker
+
+1. Build the image:
+
+```bash
+docker build -t ai-assignment .
+```
+
+2. Run the tests:
+
+```bash
+docker run --rm ai-assignment
+```
 
 ### 4) Find + fix a bug (required)
 
