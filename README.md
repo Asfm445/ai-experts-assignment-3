@@ -33,6 +33,31 @@ Update this README to include:
 - how to run the tests locally,
 - how to build and run tests with Docker.
 
+## How to Run Locally
+
+### Prerequisites
+- Python 3.11+
+- [Optional] A virtual environment (`python -m venv .venv`)
+
+### Steps
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+Run the test suite:
+
+```Bash
+pytest -v```
+
+How to Run with Docker
+Build the image:
+
+Bash
+docker build -t ai-assignment .
+Run the tests:
+
+Bash
+docker run --rm ai-assignment
+
 ### 4) Find + fix a bug (required)
 
 There is a bug somewhere in this repository.
